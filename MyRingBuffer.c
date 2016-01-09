@@ -40,12 +40,12 @@ RingBuffer* init_RingBuffer()
 
 /** Write to buffer. 
  */
-bool write_RingBuffer(RingBuffer *rb, const char *newdata) 
+int write_RingBuffer(RingBuffer *rb, const char *newdata) 
 {
     int datalen = strlen(newdata);
     // if ring buffer too small, don't copy at all
     if(datalen > rb->capacity - rb->size - 1)
-        return false;
+        return 0;
     // if after copying doesn't surpass highest index
     if(rb->zero + rb->size + datalen < rb->capacity){
         strncpy(rb->data+rb->zero + rb->size,newdata,datalen);
@@ -66,13 +66,13 @@ bool write_RingBuffer(RingBuffer *rb, const char *newdata)
         rb->data[l2] = 0;
     }
     rb->size += datalen;
-    return true;
+    return 1;
 }
 
 
 /** Pop from buffer.
  */
-bool pop_RingBuffer(RingBuffer *rb, char *result, int poplen)
+int pop_RingBuffer(RingBuffer *rb, char *result, int poplen)
 {
     if(poplen <= rb->size){
         // split into two parts
@@ -90,9 +90,9 @@ bool pop_RingBuffer(RingBuffer *rb, char *result, int poplen)
         const char * pointer = rb->data + rb->zero;
         rb->zero = (rb->zero+poplen)%rb->capacity;
         rb->size -= poplen;
-        return true;
+        return 1;
     }else{
-        return false;
+        return 0;
     }
 }
 
