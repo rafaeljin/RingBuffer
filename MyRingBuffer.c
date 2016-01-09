@@ -70,7 +70,7 @@ bool write_RingBuffer(RingBuffer *rb, const char *newdata)
 }
 
 
-/** Pop from buffer. incorrect
+/** Pop from buffer.
  */
 bool pop_RingBuffer(RingBuffer *rb, char *result, int poplen)
 {
@@ -97,6 +97,9 @@ bool pop_RingBuffer(RingBuffer *rb, char *result, int poplen)
 }
 
 
+/** Find char in normal string.
+ *  @return: distance from "zero" or -1 for not found.
+ */
 int find_NormalString(const char*s,char c)
 {
     char *found;
@@ -126,8 +129,7 @@ int find_RingBuffer(RingBuffer *rb, char c)
 }
 
 
-/** Find char in normal string.
- *  @return: distance from "zero" or -1 for not found.
+/** Print info about Ring Buffer.
  */
 void print_RingBuffer(RingBuffer *rb){
     printf("ZeroIndex:%d,Size:%d,Capacity:%d\n",rb->zero,
